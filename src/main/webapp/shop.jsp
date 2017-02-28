@@ -15,9 +15,34 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script>
+            
+            
+            function canBuy() {
+
+                var p1 = 2;
+                var p2 = 3;
+                var monitos =<%=((session.getAttribute("monitos")%>;
+
+                var endp = calculatePrice(p1, p2);
+                if (endp > monitos) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            function calculatePrice(p1, p2) {
+                return p1 + p2;
+            }
+
+        </script>
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
+        <div style="float: right;">
+            <a>Your balance: <%=((session.getAttribute("monitos") == null) ? "" : session.getAttribute("monitos"))%></</a>
+        </div> 
+
         <form action="Control" method="POST">
             <table>    
                 <tr>
@@ -35,7 +60,7 @@
                         out.println("<tr> "
                                 + "<td>" + bot.getTaste() + "</td>"
                                 + "<td>" + bot.getPrice() + "</td>");
-                        out.println("<td><input type=\"radio\" name=\"bot\" value=\"" + bot.getTaste() + "\"></td>");
+                        out.println("<td><input type=\"radio\" id=\"" + bot.getPrice() + "\" name=\"bot\" value=\"" + bot.getTaste() + "\" ></td>");
                     }
                 %>
 
@@ -57,11 +82,12 @@
                         out.println("<tr> "
                                 + "<td>" + top.getTaste() + "</td>"
                                 + "<td>" + top.getPrice() + "</td>");
-                        out.println("<td><input type=\"radio\" name=\"top\" value=\"" + top.getTaste() + "\"></td>");
+                        out.println("<td><input type=\"radio\" id=\"" + top.getPrice() + "\" name=\"top\" value=\"" + top.getTaste() + "\"></td>");
                     }
                 %>
 
             </table> 
+            <input type="number" name="quantity" value ="1">
             <input type="submit" name="origin" value="order">
         </form>
 

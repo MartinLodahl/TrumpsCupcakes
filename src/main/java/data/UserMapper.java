@@ -65,20 +65,9 @@ public class UserMapper {
                 user.setBalance(balance);
                 return user;
             }
-            return new User("Bob", "123", 0);
         } catch (SQLException ex) {
             Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new User("Bob", "123", 0);
+        return null;
     }
-
-    public static void main(String[] args) {
-        UserMapper um = new UserMapper();
-        User user = new User("Ali", "Dogan", 123);
-        um.createUser(user);
-        User user2 = um.checkLogin(user);
-        user = new User("Peder", "1", user2.getBalance());
-        um.createUser(user);
-    }
-
 }

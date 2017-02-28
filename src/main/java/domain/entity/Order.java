@@ -12,9 +12,9 @@ package domain.entity;
 public class Order
 {
     User user;
-    List<Cupcakes> cupcakes;
+    ArrayList<Cupcake> cupcakes;
     
-    public Order (User user, List<Cupcakes> cupcakes){
+    public Order (User user, ArrayList<Cupcake> cupcakes){
         this.user = user;
         this.cupcakes = cupcakes;
     }
@@ -29,12 +29,12 @@ public class Order
         this.user = user;
     }
 
-    public <any> getCupcakes()
+    public ArrayList<Cupcake> getCupcakes()
     {
         return cupcakes;
     }
 
-    public void setCupcakes(<any> cupcakes)
+    public void setCupcakes(ArrayList<Cupcake> cupcake)
     {
         this.cupcakes = cupcakes;
     }

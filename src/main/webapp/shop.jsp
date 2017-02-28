@@ -5,7 +5,10 @@
 --%>
 
 
-<%@page import="java.util.ArrayList"%>
+<%@page import="domain.entity.Top"%>
+<%@page import="data.TopBottomMapper"%>
+<%@page import="java.util.List"%>
+<%@page import="domain.entity.Bot"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,22 +18,51 @@
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
+        <form action="Control" method="POST">
+            <table>    
+                <tr>
+                    <th>Taste</th>
+                    <th>Price</th>
+                    <th>Choose</th>
+                </tr>    
 
-        <form action="">
-            <%
-        // retrieve your list from the request, with casting 
-                ArrayList<Bots> list = (ArrayList<Bots>) request.getAttribute("Control");
+                <h2> Bots </h2>
+                <%
+                    // retrieve your list from the request, with casting 
+                    TopBottomMapper tbm = new TopBottomMapper();
+                    List<Bot> listBot = tbm.getBot();
+                    for (Bot bot : listBot) {
+                        out.println("<tr> "
+                                + "<td>" + bot.getTaste() + "</td>"
+                                + "<td>" + bot.getPrice() + "</td>");
+                        out.println("<td><input type=\"radio\" name=\"bot\" value=\"" + bot.getTaste() + "\"></td>");
+                    }
+                %>
 
-        // print the information about every category of the list
-                for (Bots bots : list) {
-                    out.println("<input type=\"radio\" name=\""+bots.getName()+"\" value=\"bot\">");
-                    out.println(Bots.getName());
-                    out.println(category.getMainCategoryId());
-                }
-            %>
-            <input type="radio" name="gender" value="male"> Male<br>
-            <input type="radio" name="gender" value="female"> Female<br>
-            <input type="radio" name="gender" value="other"> Other
+
+            </table> 
+            <table>    
+                <tr>
+                    <th>Taste</th>
+                    <th>Price</th>
+                    <th>Choose</th>
+                </tr>    
+
+                <h2> Tops </h2>
+                <%
+                    // retrieve your list from the request, with casting 
+                    tbm = new TopBottomMapper();
+                    List<Top> listTop = tbm.getTop();
+                    for (Top top : listTop) {
+                        out.println("<tr> "
+                                + "<td>" + top.getTaste() + "</td>"
+                                + "<td>" + top.getPrice() + "</td>");
+                        out.println("<td><input type=\"radio\" name=\"top\" value=\"" + top.getTaste() + "\"></td>");
+                    }
+                %>
+
+            </table> 
+            <input type="submit" name="origin" value="order">
         </form>
 
     </body>

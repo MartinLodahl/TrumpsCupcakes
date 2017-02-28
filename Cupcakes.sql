@@ -1,8 +1,8 @@
-use test;
+use bob;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS top;
 DROP TABLE IF EXISTS bot;
-DROP TABLE IF EXISTS order;
+DROP TABLE IF EXISTS orders;
 create table user(
 username varchar(45) primary key,
 password varchar(45),
@@ -39,7 +39,7 @@ values
 ("Lemon", 8),
 ("Blue cheese", 9);
 
-create table order(
+create table orders(
 FKcupcakeTop varchar(45),
 FOREIGN KEY (FKcupcakeTop) REFERENCES top(taste),
 FKcupcakeBot varchar(45),

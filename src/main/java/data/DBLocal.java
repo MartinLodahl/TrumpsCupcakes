@@ -10,7 +10,7 @@ public class DBLocal {
     private static DBLocal instance;
     private static PreparedStatement stmt;
     private static String driver = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://localhost:3306/test";
+    private static String URL = "jdbc:mysql://localhost:3306/bob";
     private static String id = "root";
     private static String pw = "fuck";
 

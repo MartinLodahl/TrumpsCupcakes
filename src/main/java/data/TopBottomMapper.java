@@ -12,17 +12,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Pravien
  */
-public class BotMapper
+public class TopBottomMapper
 {
 
     Connection conn;
 
-    public BotMapper()
+    public TopBottomMapper()
     {
         this.conn = new DBLocal().getConnection();
     }
@@ -63,5 +66,4 @@ public class BotMapper
         }
         return top;
     }
-
 }

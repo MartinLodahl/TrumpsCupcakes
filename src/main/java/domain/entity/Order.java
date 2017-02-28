@@ -5,6 +5,8 @@
  */
 package domain.entity;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Pravien

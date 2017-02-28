@@ -5,9 +5,17 @@
  */
 package control;
 
+import data.TopBottomMapper;
 import data.UserMapper;
+import domain.entity.Bot;
+import domain.entity.Top;
 import domain.entity.User;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +55,8 @@ public class Control extends HttpServlet {
                 }
                 request.getSession().setAttribute("username", username);
                 request.getSession().setAttribute("monitos", monitos);
-                request.getRequestDispatcher("shop.jsp").forward(request, response);
+                startShop(request, response);
+                
                 break;
             case "login":
                 String usernameLogin = request.getParameter("username");
@@ -60,7 +69,7 @@ public class Control extends HttpServlet {
                 }
                 request.getSession().setAttribute("username", loggedIn.getUsername());
                 request.getSession().setAttribute("monitos", loggedIn.getBalance());
-                request.getRequestDispatcher("shop.jsp").forward(request, response);
+                startShop(request, response);
                 break;
         }
 
@@ -104,5 +113,21 @@ public class Control extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private void startShop(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            TopBottomMapper tbm = new TopBottomMapper();
+            List<Bot> listBot = tbm.getBot();
+            List<Top> listTop = tbm.getTop();
+            request.getSession().setAttribute("listBot", listBot);
+            request.getSession().setAttribute("listTop", listTop);
+            ArrayList<Bot> list = (ArrayList<Bot>) request.getSession().getAttribute("listBot");
+            list.get(0).getPrice();
+            
+            request.getRequestDispatcher("shop.jsp").forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

@@ -67,3 +67,22 @@ public class TopBottomMapper
         return top;
     }
 }
+
+/*<script>
+            function canBuy() {
+                var p1 = 2;
+                        var p2 = 3;
+                        var monitos =<%=((session.getAttribute("monitos")%>;
+
+                var endp = calculatePrice(p1, p2);
+                if (endp > monitos) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            function calculatePrice(p1, p2) {
+                return p1 + p2;
+            }
+
+        </script>*/

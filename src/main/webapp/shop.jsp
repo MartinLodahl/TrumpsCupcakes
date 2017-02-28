@@ -13,5 +13,17 @@
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
+
+        <form action="">
+            <% for (int i = 0; i < bots.size(); i ++) {%>
+
+            <%=bots.get(i).getFestivalName()%>
+
+            <% }%>
+            <input type="radio" name="gender" value="male"> Male<br>
+            <input type="radio" name="gender" value="female"> Female<br>
+            <input type="radio" name="gender" value="other"> Other
+        </form>
+
     </body>
 </html>

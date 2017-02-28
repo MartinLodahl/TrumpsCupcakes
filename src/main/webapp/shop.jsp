@@ -4,6 +4,8 @@
     Author     : MartinLodahl
 --%>
 
+
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,11 +17,17 @@
         <h1>Hello You're now in the shop!</h1>
 
         <form action="">
-            <% for (int i = 0; i < bots.size(); i ++) {%>
+            <%
+        // retrieve your list from the request, with casting 
+                ArrayList<Bots> list = (ArrayList<Bots>) request.getAttribute("Control");
 
-            <%=bots.get(i).getFestivalName()%>
-
-            <% }%>
+        // print the information about every category of the list
+                for (Bots bots : list) {
+                    out.println("<input type=\"radio\" name=\""+bots.getName()+"\" value=\"bot\">");
+                    out.println(Bots.getName());
+                    out.println(category.getMainCategoryId());
+                }
+            %>
             <input type="radio" name="gender" value="male"> Male<br>
             <input type="radio" name="gender" value="female"> Female<br>
             <input type="radio" name="gender" value="other"> Other

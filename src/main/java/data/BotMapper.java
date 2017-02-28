@@ -5,9 +5,13 @@
  */
 package data;
 
+import domain.entity.Bot;
+import domain.entity.Top;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,21 +19,49 @@ import java.sql.ResultSet;
  */
 public class BotMapper
 {
-    
+
     Connection conn;
 
-    public UserMapper() {
+    public BotMapper()
+    {
         this.conn = new DBLocal().getConnection();
     }
-    
-    public ArrayList<Bot> getBot (){
-            String sql = "SELECT * FROM bot;";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                
-            }
+
+    public ArrayList<Bot> getBot() throws SQLException
+    {
+        ArrayList<Bot> bot = new ArrayList();
+        Bot newBot;
+        String sql = "SELECT * FROM bot;";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next())
+        {
+            String taste = rs.getString("taste");
+            int price = rs.getInt("price");
+            newBot = new Bot(taste,price);
+            bot.add(newBot);
+        }
+        return bot;
     }
     
+    
+    public ArrayList<Top> getTop() throws SQLException
+    {
+        ArrayList<Top> top = new ArrayList();
+        Top newTop;
+        String sql = "SELECT * FROM top;";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next())
+        {
+            String taste = rs.getString("taste");
+            int price = rs.getInt("price");
+            newTop = new Top(taste,price);
+            top.add(newTop);
+        }
+        return top;
+    }
+
 }

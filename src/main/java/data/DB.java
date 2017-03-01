@@ -38,3 +38,13 @@ public class DB {
     }
 }
 
+/*/* 
+            function canBuy(var p1, var p2) {
+
+            var monitos =<%=((request.getSession().getAttribute("monitos")%>;
+            var endp = calculatePrice(p1, p2);
+            if (endp > monitos) {
+            return false;
+            } else {
+            return true;
+            }*/

@@ -59,5 +59,9 @@ public class Cupcake
     {
         this.price = price;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
     
 }

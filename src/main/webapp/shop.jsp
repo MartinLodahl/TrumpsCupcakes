@@ -25,7 +25,7 @@
         <h1>Hello You're now in the shop!</h1>
         <div style="float: right;">
             <a>Your balance: <%=((session.getAttribute("monitos") == null) ? "" : session.getAttribute("monitos"))%></</a>
-            <p id="per" >Price should happen</p>
+            <p id="priceThisCake" >Price should happen</p>
         </div> 
 
         <form action="Control" method="POST" name="cake">
@@ -51,7 +51,7 @@
                     }
                     out.println("<td><input type=\"hidden\" name=\"bot\" id=\"bot0\" value=\"" + listBot.size() + "\" ></td>");
 
-                    out.println("<td><input type=\"hidden\" name=\"money\" id=\""+(session.getAttribute("monitos"))+"\" ></td>");
+                    out.println("<td><input type=\"hidden\" name=\"money\" id=\"money\" value=\"" + (session.getAttribute("monitos")) + "\" ></td>");
                 %>
 
 
@@ -80,10 +80,31 @@
 
             </table> 
             <input type="number" name="quantity" value ="1" id="quantity">
-            <input type="submit" name="origin" value="order">
+            <input type="button" name="add" value="ADD"  id="add">
+            <input type="submit" name="origin" value="order" id="order">
         </form>
 
+        <table id="orders">
+            <thead>
+                <tr>
+                    <th>Top</th>
+                    <th>Bottom</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>SubTotal</th>
+                </tr>
+            </thead>
+            <tbody id="ordered">                    
+            </tbody>
+        </table>
+
+
+
+
         <script>
+
+            document.getElementById("order").disabled = true;
+            document.getElementById("add").disabled = true;
 
             function calculatePrice(p1, p2, quantity) {
                 var price = (p1 + p2) * quantity;
@@ -91,6 +112,7 @@
 
                 return price;
             }
+            var money = $('input[id="money"]').val();
 
             var bL = $('input[id="bot0"]').val();
             for (var i = 0; i <= bL; i++) {
@@ -102,6 +124,8 @@
                 document.getElementById("top" + j).addEventListener('click', run);
             }
             document.getElementById("quantity").addEventListener('click', run);
+            document.getElementById("add").addEventListener('click', add);
+            document.getElementById("order").addEventListener('click', order);
 
 
             function run() {
@@ -109,21 +133,87 @@
                 var p1;
                 var p2;
                 var quantity;
-
                 var valueBot = $('input[name="bot"]:checked').val();
                 var valueTop = $('input[name="top"]:checked').val();
                 quantity = $('input[id="quantity"]').val();
-
-
-
                 p1 = valueBot.substring(0, 1);
                 p2 = valueTop.substring(0, 1);
-
-
                 p1 = parseInt(p1);
                 p2 = parseInt(p2);
                 quantity = parseInt(quantity);
-                document.getElementById("per").innerHTML = "Price: " + calculatePrice(p1, p2, quantity);
+                var price = calculatePrice(p1, p2, quantity);
+                var moneyLeft = checkMoney(price, money);
+                document.getElementById("priceThisCake").innerHTML = "Price: " + price;
+
+                if (moneyLeft >= 0) {
+                    document.getElementById("add").disabled = false;
+                } else {
+                    document.getElementById("add").disabled = false;
+                }
+            }
+
+
+
+
+            function checkMoney(price, money) {
+                return money - price;
+            }
+
+
+            function add()
+            {
+                var valueBot = $('input[name="bot"]:checked').val();
+                var valueTop = $('input[name="top"]:checked').val();
+                quantity = $('input[id="quantity"]').val();
+                var p1 = valueBot.substring(0, 1);
+                var p2 = valueTop.substring(0, 1);
+                p1 = parseInt(p1);
+                p2 = parseInt(p2);
+                var nameBot = valueBot.substring(2);
+                var nameTop = valueTop.substring(2);
+
+                var ordered = document.getElementById("ordered");
+                ordered.innerHTML +=
+                        '<tr>' +
+                        '<td>' + nameTop + '</td>' +
+                        '<td>' + nameBot + '</td>' +
+                        '<td>' + (p1 + p2) + '</td>' +
+                        '<td>' + quantity + '</td>' +
+                        '<td>' + calculatePrice(p1, p2, quantity) + '</td>' +
+                        '</tr>';
+                var total = 0;
+                var table = document.getElementById("orders");
+                var rows = $('#orders tr').length;
+                rows = parseInt(rows);
+                for (var i = 1; i < rows; i++) {
+                    total += parseInt(document.getElementById("orders").rows[i].cells[4].innerHTML);
+                }
+                var checkOrder = checkMoney(total, money);
+                if (checkOrder >= 0) {
+                    document.getElementById("order").disabled = false;
+                } else {
+                    document.getElementById("order").disabled = true;
+                }
+            }
+            
+           function order(){
+               
+                var table = document.getElementById("orders");
+                
+        var list = new Array(); 
+        
+        var rows = $('#orders tr').length;
+        
+                rows = parseInt(rows);
+                
+                for (var i = 1; i < rows; i++) {
+                    list.push(document.getElementById("orders").rows[i].cells[0].innerHTML);
+                    list.push(document.getElementById("orders").rows[i].cells[1].innerHTML);
+                    list.push(document.getElementById("orders").rows[i].cells[3].innerHTML);                    
+                }
+                alert(list);
+                sessionStorage.setItem("order", list);
+                
             }
 
 

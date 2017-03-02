@@ -21,6 +21,11 @@ public class User {
         this.balance = balance;
     }
 
+    public User(String username, int balance) {
+        this.username = username;
+        this.balance = balance;
+    }
+
     public User() {
     }
 

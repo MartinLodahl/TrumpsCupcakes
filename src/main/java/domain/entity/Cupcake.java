@@ -23,6 +23,11 @@ public class Cupcake
         this.price = price;
     }
 
+    public Cupcake(String top, String bot) {
+        this.top = top;
+        this.bot = bot;
+    }
+
     public String getTop()
     {
         return top;

@@ -81,9 +81,11 @@
             </table> 
             <input type="number" name="quantity" value ="1" id="quantity">
             <input type="button" name="add" value="ADD"  id="add">
+        </form>
+        <form action="Control" method="POST" id="orderForm">
+
             <input type="submit" name="origin" value="order" id="order">
         </form>
-
         <table id="orders">
             <thead>
                 <tr>
@@ -102,7 +104,7 @@
 
 
         <script>
-
+            var k = 0;
             document.getElementById("order").disabled = true;
             document.getElementById("add").disabled = true;
 
@@ -181,6 +183,13 @@
                         '<td>' + quantity + '</td>' +
                         '<td>' + calculatePrice(p1, p2, quantity) + '</td>' +
                         '</tr>';
+
+                var orderForm = document.getElementById("orderForm");
+                orderForm.innerHTML +=
+                        '<input type="hidden" name="top' + k + '" value="' + nameTop + '">' +
+                        '<input type="hidden" name="bot' + k + '" value="' + nameBot + '">' +
+                        '<input type="hidden" name="quantity' + k + '" value="' + quantity + '">';
+                k++;
                 var total = 0;
                 var table = document.getElementById("orders");
                 var rows = $('#orders tr').length;
@@ -195,25 +204,12 @@
                     document.getElementById("order").disabled = true;
                 }
             }
-            
-           function order(){
-               
-                var table = document.getElementById("orders");
-                
-        var list = new Array(); 
-        
-        var rows = $('#orders tr').length;
-        
-                rows = parseInt(rows);
-                
-                for (var i = 1; i < rows; i++) {
-                    list.push(document.getElementById("orders").rows[i].cells[0].innerHTML);
-                    list.push(document.getElementById("orders").rows[i].cells[1].innerHTML);
-                    list.push(document.getElementById("orders").rows[i].cells[3].innerHTML);                    
-                }
-                alert(list);
-                sessionStorage.setItem("order", list);
-                
+
+            function order() {
+
+                var orderForm = document.getElementById("orderForm");
+                orderForm.innerHTML +=
+                        '<input type="hidden" name="k" value="' + k + '">';
             }
 
 

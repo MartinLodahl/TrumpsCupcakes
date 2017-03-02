@@ -8,6 +8,7 @@ package control;
 import data.TopBottomMapper;
 import data.UserMapper;
 import domain.entity.Bot;
+import domain.entity.Cupcake;
 import domain.entity.Top;
 import domain.entity.User;
 import java.io.IOException;
@@ -49,27 +50,38 @@ public class Control extends HttpServlet {
                 int monitos = Integer.parseInt(request.getParameter("monitos"));
                 User user = new User(username, password, monitos);
                 boolean registered = um.createUser(user);
-                if(!registered){
+                if (!registered) {
                     request.getSession().setAttribute("fail", "You twat, that user is already in use");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("username", username);
                 request.getSession().setAttribute("monitos", monitos);
                 startShop(request, response);
-                
+
                 break;
             case "login":
                 String usernameLogin = request.getParameter("username");
                 String passwordLogin = request.getParameter("password");
                 User userLogin = new User(usernameLogin, passwordLogin);
                 User loggedIn = um.checkLogin(userLogin);
-                if (loggedIn == null){
+                if (loggedIn == null) {
                     request.getSession().setAttribute("fail", "You twat, your username or password is wrong");
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                 }
                 request.getSession().setAttribute("username", loggedIn.getUsername());
                 request.getSession().setAttribute("monitos", loggedIn.getBalance());
                 startShop(request, response);
+                break;
+            case "order":
+                ArrayList<Cupcake> arrayList = new ArrayList<Cupcake>();
+                for (int i = 0; i < Integer.parseInt(request.getParameter("k")); i++) {
+                    String botI = "bot"+i; 
+                    String bot = request.getParameter(botI);
+                    String topI = "top"+i;
+                    String top = request.getParameter(topI);
+                    Cupcake cupcake = new Cupcake(top, bot);
+                    arrayList.add(cupcake);
+                }
                 break;
         }
 
@@ -123,7 +135,7 @@ public class Control extends HttpServlet {
             request.getSession().setAttribute("listTop", listTop);
             ArrayList<Bot> list = (ArrayList<Bot>) request.getSession().getAttribute("listBot");
             list.get(0).getPrice();
-            
+
             request.getRequestDispatcher("shop.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);

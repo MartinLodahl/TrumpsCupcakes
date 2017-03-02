@@ -20,12 +20,12 @@
             src="https://code.jquery.com/jquery-3.1.1.js"
             integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
         crossorigin="anonymous"></script>
-        
-        <script type="text/javascript" src="${pageContext.request.contextPath}/moni.js"></script>
+
+
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
-        
+
         <div style="float: right;">
             <a>Your balance: <%=((session.getAttribute("monitos") == null) ? "" : session.getAttribute("monitos"))%></</a>
             <p id="priceThisCake" >Price should happen</p>
@@ -103,6 +103,7 @@
             <tbody id="ordered">                    
             </tbody>
         </table>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/moni.js"></script>
     </body>
 </html>
 

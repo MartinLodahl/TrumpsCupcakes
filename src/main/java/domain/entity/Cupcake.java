@@ -15,17 +15,19 @@ public class Cupcake
     String top;
     String bot;
     int price;
+    int quantity;
 
-    public Cupcake(String top, String bot, int price)
-    {
+    public Cupcake(String top, String bot, int price, int quantity) {
         this.top = top;
         this.bot = bot;
         this.price = price;
+        this.quantity = quantity;
     }
 
-    public Cupcake(String top, String bot) {
+    public Cupcake(String top, String bot, int quantity) {
         this.top = top;
         this.bot = bot;
+        this.quantity = quantity;
     }
 
     public String getTop()

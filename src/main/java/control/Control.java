@@ -5,6 +5,7 @@
  */
 package control;
 
+import data.OrderMapper;
 import data.TopBottomMapper;
 import data.UserMapper;
 import domain.entity.Bot;
@@ -79,9 +80,15 @@ public class Control extends HttpServlet {
                     String bot = request.getParameter(botI);
                     String topI = "top"+i;
                     String top = request.getParameter(topI);
-                    Cupcake cupcake = new Cupcake(top, bot);
+                    String quantityI = "quantity"+i;
+                    int quantity = Integer.parseInt(request.getParameter(quantityI));
+                    Cupcake cupcake = new Cupcake(top, bot, quantity);
                     arrayList.add(cupcake);
                 }
+                OrderMapper om = new OrderMapper();
+                om.createOrder(arrayList);
+                
+                
                 break;
         }
 

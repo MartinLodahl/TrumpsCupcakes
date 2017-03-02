@@ -81,8 +81,9 @@
             </table> 
             <input type="number" name="quantity" value ="1" id="quantity">
             <input type="button" name="add" value="ADD"  id="add">
+            <input type="button" name="lockOrder" value="lockOrder"  id="lockOrder">
         </form>
-        <form action="Control" method="POST" id="orderForm">
+        <form action="Control" method="POST" id="orderForm" >
 
             <input type="submit" name="origin" value="order" id="order">
         </form>
@@ -107,7 +108,7 @@
             var k = 0;
             document.getElementById("order").disabled = true;
             document.getElementById("add").disabled = true;
-
+            document.getElementById("lockOrder").disabled = true;
             function calculatePrice(p1, p2, quantity) {
                 var price = (p1 + p2) * quantity;
 
@@ -127,7 +128,8 @@
             }
             document.getElementById("quantity").addEventListener('click', run);
             document.getElementById("add").addEventListener('click', add);
-            document.getElementById("order").addEventListener('click', order);
+            document.getElementById("lockOrder").addEventListener('click', order);
+
 
 
             function run() {
@@ -199,18 +201,20 @@
                 }
                 var checkOrder = checkMoney(total, money);
                 if (checkOrder >= 0) {
-                    document.getElementById("order").disabled = false;
+                    document.getElementById("lockOrder").disabled = false;
                 } else {
-                    document.getElementById("order").disabled = true;
+                    document.getElementById("lockOrder").disabled = true;
                 }
             }
 
             function order() {
-                alert(0);
+
                 var orderForm = document.getElementById("orderForm");
                 orderForm.innerHTML +=
                         '<input type="hidden" name="k" value="' + k + '">';
-                alert(0);
+                
+                document.getElementById("order").disabled = false;
+                document.getElementById("add").disabled = true;
             }
 
 

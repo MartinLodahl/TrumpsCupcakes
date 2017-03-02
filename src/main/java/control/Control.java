@@ -43,6 +43,7 @@ public class Control extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String origin = request.getParameter("origin");
+        System.out.println(origin);
         UserMapper um = new UserMapper();
         switch (origin) {
             case "register":

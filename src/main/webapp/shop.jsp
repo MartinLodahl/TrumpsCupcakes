@@ -21,7 +21,7 @@
             integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
         crossorigin="anonymous"></script>
         
-        <script src="moni.js"></script>
+        <script type="text/javascript" src="moni.js"></script>
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
@@ -102,11 +102,6 @@
             <tbody id="ordered">                    
             </tbody>
         </table>
-
-
-
-
-        
     </body>
 </html>
 

@@ -206,10 +206,11 @@
             }
 
             function order() {
-
+                alert(0);
                 var orderForm = document.getElementById("orderForm");
                 orderForm.innerHTML +=
                         '<input type="hidden" name="k" value="' + k + '">';
+                alert(0);
             }
 
 

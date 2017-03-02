@@ -16,6 +16,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+        crossorigin="anonymous"></script>
     </head>
     <body>
         <h1>Hello You're now in the shop!</h1>
@@ -39,13 +43,15 @@
                     List<Bot> listBot = tbm.getBot();
                     int i = 0;
                     for (Bot bot : listBot) {
-                        i +=1;
+                        i += 1;
                         out.println("<tr> "
                                 + "<td>" + bot.getTaste() + "</td>"
                                 + "<td>" + bot.getPrice() + "</td>");
-                        out.println("<td><input type=\"radio\" name=\"bot\" id=\"bot"+i+"\" value=\""/* +bot.getPrice()+"/"*/ + bot.getTaste() + "\" ></td>");
-                        
+                        out.println("<td><input type=\"radio\" name=\"bot\" id=\"bot" + i + "\" value=\"" + bot.getPrice() + "/" + bot.getTaste() + "\" ></td>");
                     }
+                    out.println("<td><input type=\"hidden\" name=\"bot\" id=\"bot0\" value=\"" + listBot.size() + "\" ></td>");
+
+                    out.println("<td><input type=\"hidden\" name=\"money\" id=\""+(session.getAttribute("monitos"))+"\" ></td>");
                 %>
 
 
@@ -58,64 +64,66 @@
                 </tr>    
 
                 <h2> Tops </h2>
-                <%
-                    // retrieve your list from the request, with casting 
+                <%                    // retrieve your list from the request, with casting 
                     tbm = new TopBottomMapper();
                     List<Top> listTop = tbm.getTop();
+                    int j = 0;
                     for (Top top : listTop) {
+                        j++;
                         out.println("<tr> "
                                 + "<td>" + top.getTaste() + "</td>"
                                 + "<td>" + top.getPrice() + "</td>");
-                        out.println("<td><input type=\"radio\" id=\"" + top.getPrice() + "\" name=\"top\" value=\""/*+top.getPrice()+"/"*/ + top.getTaste() + "\"></td>");
+                        out.println("<td><input type=\"radio\" id=\"top" + j + "\" name=\"top\" value=\"" + top.getPrice() + "/" + top.getTaste() + "\"></td>");
                     }
+                    out.println("<td><input type=\"hidden\" name=\"top\" id=\"top0\" value=\"" + listTop.size() + "\" ></td>");
                 %>
 
             </table> 
-            <input type="number" name="quantity" value ="1">
+            <input type="number" name="quantity" value ="1" id="quantity">
             <input type="submit" name="origin" value="order">
         </form>
 
         <script>
-            document.getElementById("per").innerHTML = calculatePrice(1, 2);
-            function calculatePrice(p1, p2) {
-                var price = p1 + p2;
-                alert(price);
+
+            function calculatePrice(p1, p2, quantity) {
+                var price = (p1 + p2) * quantity;
+
 
                 return price;
             }
 
+            var bL = $('input[id="bot0"]').val();
+            for (var i = 0; i <= bL; i++) {
+                document.getElementById("bot" + i).addEventListener('click', run);
+            }
+            var tL = $('input[id="top0"]').val();
 
-            document.getElementById("bot1").addEventListener('click', run);
-            
-            alert(34233);
-            
+            for (var j = 0; j <= tL; j++) {
+                document.getElementById("top" + j).addEventListener('click', run);
+            }
+            document.getElementById("quantity").addEventListener('click', run);
+
+
             function run() {
-                alert(0);
+
                 var p1;
                 var p2;
-                alert(1);
-               var valueBot = $('input[name="bot"]:checked').val();
-               alert(valueBot);
-                var radios = document.getElementsByName('bot');
-                alert(2);
-                for (var i = 0, length = radios.length; i < length; i++) {
-                    if (radios[i].checked) {
-                        // do whatever you want with the checked radio
-                        p1 = radios[i].id;
-                        alert(p1);
-                    }
-                }
-                alert(3);
-                $('input[name="top"]:checked').val();
-                var radios = document.getElementsByName('top');
-                for (var i = 0, length = radios.length; i < length; i++) {
-                    if (radios[i].checked) {
-                        // do whatever you want with the checked radio
-                        p2 = radios[i].id;
-                        alert(p2);
-                    }
-                }
-                document.getElementById("per").innerHTML = calculatePrice(p1, p2);
+                var quantity;
+
+                var valueBot = $('input[name="bot"]:checked').val();
+                var valueTop = $('input[name="top"]:checked').val();
+                quantity = $('input[id="quantity"]').val();
+
+
+
+                p1 = valueBot.substring(0, 1);
+                p2 = valueTop.substring(0, 1);
+
+
+                p1 = parseInt(p1);
+                p2 = parseInt(p2);
+                quantity = parseInt(quantity);
+                document.getElementById("per").innerHTML = "Price: " + calculatePrice(p1, p2, quantity);
             }
 
 

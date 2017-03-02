@@ -70,4 +70,26 @@ public class UserMapper {
         }
         return null;
     }
+
+    public User getUser(String userName) {
+        try {
+           
+           
+            String sql = "SELECT * FROM user where username =?;";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userName);
+            ResultSet rs = pstmt.executeQuery();
+            int balance = 0;
+            if (rs.next()) {
+                User user = new User();
+                balance = rs.getInt("balance");
+                user.setBalance(balance);
+                user.setUsername(userName);
+                return user;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

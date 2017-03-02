@@ -85,8 +85,13 @@ public class Control extends HttpServlet {
                     Cupcake cupcake = new Cupcake(top, bot, quantity);
                     arrayList.add(cupcake);
                 }
+                String userName = (String) request.getSession().getAttribute("username");
+                User userOn = um.getUser(userName);
                 OrderMapper om = new OrderMapper();
-                om.createOrder(arrayList);
+                boolean money = om.checkMoney(arrayList, userOn);
+                if(money){
+                    om.createOrder(arrayList, userOn);
+                }
                 
                 
                 break;

@@ -13,6 +13,7 @@ create table bot(
 taste varchar(45) primary key,
 price int(2)
 );
+select * from bot;
 
 INSERT INTO bot(taste, price) 
 values

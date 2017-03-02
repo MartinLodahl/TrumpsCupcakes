@@ -52,3 +52,6 @@ FOREIGN KEY (FKuserName) REFERENCES user(username)
 );
 
 select * from user;
+
+select * from orders;
+INSERT INTO orders (FKcupcakeTop, FKcupcakeBot, quantity, price, FKuserName) values ('Chocolate','Chocolate',12,12,'111');

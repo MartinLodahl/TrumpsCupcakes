@@ -92,4 +92,16 @@ public class UserMapper {
         }
         return null;
     }
+    public void updateBalance(User user, int withdraw){
+        try {
+            int userBalance = user.getBalance()-withdraw;
+            String sql = "UPDATE user set balance=? where username=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userBalance);
+            pstmt.setString(2, user.getUsername());
+            pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(UserMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

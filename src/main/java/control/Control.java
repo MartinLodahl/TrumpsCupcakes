@@ -77,11 +77,11 @@ public class Control extends HttpServlet {
             case "order":
                 ArrayList<Cupcake> arrayList = new ArrayList<Cupcake>();
                 for (int i = 0; i < Integer.parseInt(request.getParameter("k")); i++) {
-                    String botI = "bot"+i; 
+                    String botI = "bot" + i;
                     String bot = request.getParameter(botI);
-                    String topI = "top"+i;
+                    String topI = "top" + i;
                     String top = request.getParameter(topI);
-                    String quantityI = "quantity"+i;
+                    String quantityI = "quantity" + i;
                     int quantity = Integer.parseInt(request.getParameter(quantityI));
                     Cupcake cupcake = new Cupcake(top, bot, quantity);
                     arrayList.add(cupcake);
@@ -90,11 +90,14 @@ public class Control extends HttpServlet {
                 User userOn = um.getUser(userName);
                 OrderMapper om = new OrderMapper();
                 boolean money = om.checkMoney(arrayList, userOn);
-                if(money){
-                    om.createOrder(arrayList, userOn);
+
+                if (money) {
+                    int totalCost = om.createOrder(arrayList, userOn);
+                    um.updateBalance(userOn, totalCost);
+                    userOn.setBalance(userOn.getBalance()-totalCost);
                 }
-                
-                
+                request.getSession().setAttribute("monitos", userOn.getBalance());
+                request.getRequestDispatcher("shop.jsp").forward(request, response);
                 break;
         }
 

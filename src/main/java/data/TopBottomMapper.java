@@ -27,7 +27,7 @@ public class TopBottomMapper
 
     public TopBottomMapper()
     {
-        this.conn = new DBLocal().getConnection();
+        this.conn = new DB().getConnection();
     }
 
     public ArrayList<Bot> getBot() throws SQLException

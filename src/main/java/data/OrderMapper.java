@@ -24,7 +24,7 @@ public class OrderMapper {
     Connection conn;
 
     public OrderMapper() {
-        this.conn = new DBLocal().getConnection();
+        this.conn = new DB().getConnection();
     }
 
     public boolean checkMoney(ArrayList<Cupcake> arrayList, User user) {

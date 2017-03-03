@@ -22,7 +22,7 @@ public class UserMapper {
     Connection conn;
 
     public UserMapper() {
-        this.conn = new DBLocal().getConnection();
+        this.conn = new DB().getConnection();
     }
 
     public boolean createUser(User user) {

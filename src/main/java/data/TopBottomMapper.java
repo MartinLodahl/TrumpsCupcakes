@@ -27,7 +27,13 @@ public class TopBottomMapper
 
     public TopBottomMapper()
     {
-        this.conn = new DB().getConnection();
+        try {
+            this.conn = new DB().getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TopBottomMapper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TopBottomMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ArrayList<Bot> getBot() throws SQLException

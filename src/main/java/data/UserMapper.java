@@ -22,8 +22,15 @@ public class UserMapper {
     Connection conn;
 
     public UserMapper() {
-        this.conn = new DB().getConnection();
+        try {
+            this.conn = new DB().getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(TopBottomMapper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TopBottomMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
 
     public boolean createUser(User user) {
         //Returns true, if the user was created

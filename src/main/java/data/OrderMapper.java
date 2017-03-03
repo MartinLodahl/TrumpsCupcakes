@@ -24,7 +24,13 @@ public class OrderMapper {
     Connection conn;
 
     public OrderMapper() {
-        this.conn = new DB().getConnection();
+        try {
+            this.conn = new DB().getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderMapper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(OrderMapper.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean checkMoney(ArrayList<Cupcake> arrayList, User user) {

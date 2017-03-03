@@ -1,50 +1,50 @@
 package data;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+/**
+ *
+ * @author Thomas Hartmann - tha@cphbusiness.dk created on Feb 1, 2017 
+ */
 public class DB {
 
-    private Connection con;
-    private static DB instance;
-    private static PreparedStatement stmt;
-    private static String driver = "com.mysql.jdbc.Driver";
-    private static String URL = "jdbc:mysql://138.68.101.38:3306/bob";
-    private static String id = "martin";
-    private static String pw = "fuck";
 
-    public Connection getConnection() {
-        Connection con = null;
-        try {
-            Class.forName(driver);
-            con = DriverManager.getConnection(URL, id, pw);  // The connection will be released upon program 
-
-        } catch (Exception e) {
-            System.out.println("\n*** Remember to insert your  ID and PW in the DBConnector class! ***\n");
-            System.out.println("error in DBConnector.getConnection()");
-            System.out.println(e);
+    private final static String HOST     = "138.68.101.38";
+    private final static int    PORT     = 3306;
+    private final static String DATABASE = "bob";
+    private final static String USERNAME = "martin"; 
+    private final static String PASSWORD = "fuck";
+    private static Connection connection = null;
+    
+    
+    public static Connection getConnection() throws SQLException, ClassNotFoundException{
+        if (connection == null) {
+            Class.forName("com.mysql.jdbc.Driver");
+            String url = String.format("jdbc:mysql://%s:%s/%s", HOST, PORT, DATABASE);
+            return DriverManager.getConnection(url, USERNAME, PASSWORD);
         }
-
-        return con;
+        return connection;
     }
-
-    public void releaseConnection(Connection con) {
-        try {
-            con.close();
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+//    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+//        new DBconnector();
+//    }
+//    public ResultSet doQuery(String query) throws SQLException, ClassNotFoundException{
+//        System.out.println("*********"+query);
+//        Statement stmt = getConnector().createStatement();
+//        ResultSet res = stmt.executeQuery(query);
+//        return res;
+//    }
+//    
+//    public void doUpdate(String query) throws SQLException, ClassNotFoundException{
+//        Statement stmt = getConnector().createStatement();
+//        stmt.executeUpdate(query);
+//    }
+//    
+    public static PreparedStatement getPreparedStatement(String sql) throws SQLException, ClassNotFoundException{
+        return getConnection().prepareStatement(sql);
     }
 }
-
-/*/* 
-            function canBuy(var p1, var p2) {
-
-            var monitos =<%=((request.getSession().getAttribute("monitos")%>;
-            var endp = calculatePrice(p1, p2);
-            if (endp > monitos) {
-            return false;
-            } else {
-            return true;
-            }*/

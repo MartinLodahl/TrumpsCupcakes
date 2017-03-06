@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class DB {
 
 
-    private final static String HOST     = "138.68.101.38";
+    private final static String HOST     = "";
     private final static int    PORT     = 3306;
     private final static String DATABASE = "bob";
     private final static String USERNAME = "martin"; 
